@@ -1,72 +1,79 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import siteAvatar from '../../../static/navigatebar/头像.jpg'
+import NavBreadcrumb from './components/NavBreadcrumb.vue'
+import NavBackgroundToggle from './components/NavBackgroundToggle.vue'
+import NavOpacityControl from './components/NavOpacityControl.vue'
+import PageBackground from './components/PageBackground.vue'
 import SidebarToolbar from './components/SidebarToolbar.vue'
 import OutlineToolbar from './components/OutlineToolbar.vue'
-import SidebarHoverStrip from './components/SidebarHoverStrip.vue'
-import OutlineHoverStrip from './components/OutlineHoverStrip.vue'
-import {
-  applyUiClasses,
-  bindOutlineHoverEvents,
-  clearForcedFolderCollapse,
-  sidebarCollapsed,
-  sidebarHover,
-  outlinePinned,
-  outlineHover,
-} from './composables/blog-ui'
+import { applyBackgroundClasses } from './composables/use-background'
+import { clearForcedFolderCollapse } from './composables/blog-ui'
+import { setupOutlineNavigation } from './composables/outline-nav'
+import { setupSidebarLayout } from './composables/sidebar-layout'
 
 const { Layout: DefaultLayout } = DefaultTheme
 const route = useRoute()
 
-let unbindOutline: (() => void) | undefined
+let removeSidebarNavClick: (() => void) | null = null
+let removeOutlineNavigation: (() => void) | null = null
 
-onMounted(() => {
-  applyUiClasses()
-  unbindOutline = bindOutlineHoverEvents()
-
-  const onSidebarEnter = () => {
-    if (sidebarCollapsed.value) sidebarHover.value = true
-  }
-  const onSidebarLeave = () => {
-    sidebarHover.value = false
-  }
-
+function bindSidebarNavClick() {
   const onSidebarNavClick = (e: MouseEvent) => {
     const target = e.target as Element
     if (target.closest('.SidebarToolbar')) return
     if (target.closest('.VPSidebarItem')) clearForcedFolderCollapse()
   }
 
-  document.querySelector('.VPSidebar')?.addEventListener('mouseenter', onSidebarEnter)
-  document.querySelector('.VPSidebar')?.addEventListener('mouseleave', onSidebarLeave)
-  document.getElementById('VPSidebarNav')?.addEventListener('click', onSidebarNavClick, true)
+  const nav = document.getElementById('VPSidebarNav')
+  if (!nav) return
 
-  onUnmounted(() => {
-    unbindOutline?.()
-    document.querySelector('.VPSidebar')?.removeEventListener('mouseenter', onSidebarEnter)
-    document.querySelector('.VPSidebar')?.removeEventListener('mouseleave', onSidebarLeave)
-    document.getElementById('VPSidebarNav')?.removeEventListener('click', onSidebarNavClick, true)
+  removeSidebarNavClick?.()
+  nav.addEventListener('click', onSidebarNavClick, true)
+  removeSidebarNavClick = () => nav.removeEventListener('click', onSidebarNavClick, true)
+}
+
+function refreshSidebarLayout() {
+  nextTick(() => {
+    setupSidebarLayout()
+    bindSidebarNavClick()
   })
+}
+
+onMounted(() => {
+  applyBackgroundClasses()
+  refreshSidebarLayout()
+  removeOutlineNavigation = setupOutlineNavigation()
 })
 
-watch(() => route.path, () => {
-  if (!outlinePinned.value) outlineHover.value = false
-  applyUiClasses()
+watch(() => route.path, refreshSidebarLayout)
+
+onUnmounted(() => {
+  removeSidebarNavClick?.()
+  removeOutlineNavigation?.()
 })
 </script>
 
 <template>
+  <PageBackground />
   <DefaultLayout>
+    <template #nav-bar-title-before>
+      <img class="site-avatar" :src="siteAvatar" alt="" width="40" height="40" />
+    </template>
+    <template #nav-bar-content-before>
+      <NavBreadcrumb />
+    </template>
+    <template #nav-bar-content-after>
+      <NavBackgroundToggle />
+      <NavOpacityControl />
+    </template>
     <template #sidebar-nav-before>
       <SidebarToolbar />
     </template>
     <template #aside-outline-before>
       <OutlineToolbar />
-    </template>
-    <template #layout-bottom>
-      <SidebarHoverStrip />
-      <OutlineHoverStrip />
     </template>
   </DefaultLayout>
 </template>

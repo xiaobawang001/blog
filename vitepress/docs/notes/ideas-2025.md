@@ -8,7 +8,7 @@ order: 1
 ## 待探索
 
 - [ ] 用 VitePress 做个人知识库
-- [ ] 自动化 GitCode Pages 部署
+- [ ] 自动化 GitHub Pages 部署
 - [ ] 笔记模板统一 frontmatter
 
 ## 进行中

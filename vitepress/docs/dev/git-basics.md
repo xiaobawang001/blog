@@ -36,6 +36,6 @@ git branch -d feature/new-page
 
 ```bash
 git remote -v
-git remote add origin git@gitcode.com:user/repo.git
+git remote add origin git@github.com:user/repo.git
 git pull --rebase origin master
 ```

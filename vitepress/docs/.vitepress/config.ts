@@ -5,7 +5,7 @@ const GITHUB_USER = 'xiaobawang001'
 const SITE_REPO = 'blog'
 
 const vitePressConfig = defineConfig({
-  title: '我的笔记',
+  title: 'xiaobawang001',
   description: '个人 Markdown 笔记站点 — 语雀风格阅读体验',
   lang: 'zh-CN',
   base: `/${SITE_REPO}/`,
@@ -13,12 +13,14 @@ const vitePressConfig = defineConfig({
     ['meta', { name: 'theme-color', content: '#00b96b' }],
   ],
   themeConfig: {
-    logo: undefined,
+    siteTitle: 'xiaobawang001',
+    darkModeSwitchTitle: '切换到深色模式',
+    lightModeSwitchTitle: '切换到浅色模式',
+    darkModeSwitchLabel: '外观模式',
     nav: [
       { text: '首页', link: '/' },
       { text: '发布指南', link: '/guide/publish' },
       { text: 'GitHub', link: `https://github.com/${GITHUB_USER}` },
-      { text: 'GitCode', link: 'https://gitcode.com/xiaobawang001' },
     ],
     outline: {
       label: '文章目录',

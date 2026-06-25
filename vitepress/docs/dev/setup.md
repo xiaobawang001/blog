@@ -18,7 +18,7 @@ git --version
 | 工具 | 用途 |
 |------|------|
 | Node.js | VitePress 构建与本地预览 |
-| Git | 版本管理与 GitCode 部署 |
+| Git | 版本管理与 GitHub 部署 |
 
 ## WSL2 常用命令
 
@@ -33,4 +33,4 @@ sudo apt install -y curl wget git build-essential
 
 - 终端直接在 WSL 内运行
 - 项目路径：`~/projects/`
-- Git 凭证通过 SSH 或 GitCode 私人令牌配置
+- Git 凭证通过 SSH 或 GitHub Personal Access Token 配置
