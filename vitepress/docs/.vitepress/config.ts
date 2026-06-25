@@ -1,14 +1,14 @@
 import { defineConfig } from 'vitepress'
 import { withSidebar } from 'vitepress-sidebar'
 
-const GITCODE_USER = 'xiaobawang001'
-const GITCODE_REPO = 'blog'
+const GITHUB_USER = 'xiaobawang001'
+const SITE_REPO = 'blog'
 
 const vitePressConfig = defineConfig({
   title: '我的笔记',
   description: '个人 Markdown 笔记站点 — 语雀风格阅读体验',
   lang: 'zh-CN',
-  base: `/${GITCODE_REPO}/`,
+  base: `/${SITE_REPO}/`,
   head: [
     ['meta', { name: 'theme-color', content: '#00b96b' }],
   ],
@@ -17,7 +17,8 @@ const vitePressConfig = defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '发布指南', link: '/guide/publish' },
-      { text: 'GitCode', link: `https://gitcode.com/${GITCODE_USER}` },
+      { text: 'GitHub', link: `https://github.com/${GITHUB_USER}` },
+      { text: 'GitCode', link: 'https://gitcode.com/xiaobawang001' },
     ],
     outline: {
       label: '文章目录',

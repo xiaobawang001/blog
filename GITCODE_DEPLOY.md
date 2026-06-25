@@ -1,126 +1,138 @@
-# GitCode Pages 部署指南
+# GitCode 部署指南
 
-## 推荐方式：单仓库 + CI 自动部署
+## 重要：Pages 仅组织可用
 
-将本项目推送到 GitCode 后，根目录的 `.gitlab-ci.yml` 会在每次推送 `master` / `main` 时自动：
+GitCode 当前 **个人账号无法部署 Pages**，只有 **组织（Organization）** 下的项目才能开启 Pages。
 
-1. 安装依赖并执行 `npm run docs:build`
-2. 将构建产物放入 `public/` 目录
-3. 通过 GitCode Pages 发布静态站点
+你有两条路：
 
-| 配置项 | 说明 |
-|--------|------|
-| Markdown 源码 | `vitepress/docs/` |
-| CI 配置 | `.gitlab-ci.yml` |
-| 访问地址 | `https://<用户名>.gitcode.io/<仓库名>/` |
+| 方案 | 说明 | 推荐 |
+|------|------|------|
+| **A. 创建组织** | 免费，代码仍放 GitCode，Pages 正常用 | ✅ 首选 |
+| **B. 换托管平台** | 代码放 GitCode，静态站部署到 Cloudflare Pages 等 | 备选 |
 
 ---
 
-## 前置条件
+## 方案 A：创建组织并启用 Pages（推荐）
 
-- [ ] 已注册 [GitCode](https://gitcode.com) 账号
-- [ ] 本地已安装 Node.js 18+、Git
+### 1. 新建组织
 
-## 第一步：配置 SSH
+1. 登录 [GitCode](https://gitcode.com)
+2. 点击顶部 **「+」→ 新建组织**
+3. 填写组织名称，例如：`xiaobawang` 或 `bobo-notes`（英文、短一些更好）
+4. 完成创建
+
+文档：https://docs.gitcode.com/docs/orgs/new-org
+
+### 2. 把仓库迁到组织下
+
+任选一种方式：
+
+**方式一：转移现有项目（推荐）**
+
+1. 打开个人仓库 https://gitcode.com/xiaobawang001/blog
+2. **项目设置 → 高级 → 转移项目**
+3. 目标选择刚创建的组织
+4. 确认转移
+
+**方式二：在组织下新建仓库再推送**
 
 ```bash
-ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519_gitcode
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519_gitcode
-cat ~/.ssh/id_ed25519_gitcode.pub
+# 组织名假设为 bobo-notes
+git remote set-url gitcode git@gitcode.com:bobo-notes/blog.git
+git push -u gitcode master
 ```
 
-将公钥添加到 GitCode：**个人设置 → 公钥管理 → SSH 公钥**
+### 3. 在组织项目里开启 Pages
 
-测试连接：
+1. 进入组织下的 `blog` 项目
+2. **部署 → Pages**（或 Pages App）
+3. 按提示启用；CI 流水线 `.gitlab-ci.yml` 会在推送 `master` 时自动构建
+
+### 4. 更新本地 remote（若转移了项目）
+
+```bash
+git remote set-url gitcode git@gitcode.com:组织名/blog.git
+```
+
+### 5. 访问地址
+
+一般为：
+
+```
+https://<组织名>.gitcode.io/blog/
+```
+
+`config.ts` 里 `base: '/blog/'` 与仓库名一致即可，**不必改 base**（除非仓库改名）。
+
+---
+
+## 方案 B：GitCode 存代码 + Cloudflare Pages 托管
+
+若不想建组织，可继续用 GitCode 存 Markdown 源码，把构建产物部署到 [Cloudflare Pages](https://pages.cloudflare.com/)（个人免费）。
+
+1. 注册 Cloudflare，创建 Pages 项目
+2. 本地构建并上传：
+
+```bash
+cd vitepress && npm run docs:build
+npx wrangler pages deploy docs/.vitepress/dist --project-name=blog
+```
+
+3. 在 Cloudflare 项目设置里把 **Custom domain** 或默认 `*.pages.dev` 用作访问地址
+4. 此时 `config.ts` 的 `base` 需改为 Cloudflare 给出的路径（根域名用 `base: '/'`）
+
+后续可在 `.gitlab-ci.yml` 里加 wrangler 自动部署（需在 GitCode CI 变量里配置 `CLOUDFLARE_API_TOKEN`）。
+
+---
+
+## 日常流程（组织 Pages 方案）
+
+| 步骤 | 操作 |
+|------|------|
+| 写笔记 | 编辑 `vitepress/docs/` 下 `.md` |
+| 推送 | `git push gitcode master` |
+| 自动构建 | `.gitlab-ci.yml` → `pages` 任务 |
+| 访问 | 组织 Pages 地址 |
+
+## SSH（已配置可跳过）
 
 ```bash
 ssh -T git@gitcode.com
+# 应看到：Welcome to GitCode, xiaobawang001
 ```
 
-## 第二步：创建仓库并推送
-
-1. 在 GitCode 新建**公开**仓库，建议命名为 `blog`
-2. 本地关联远程并推送：
-
-```bash
-git remote add gitcode git@gitcode.com:你的用户名/blog.git
-git push -u gitcode master
-# 若默认分支为 main：git push -u gitcode main
-```
-
-## 第三步：修改站点配置
-
-编辑 `vitepress/docs/.vitepress/config.ts`：
-
-```ts
-const GITCODE_USER = '你的用户名'
-const GITCODE_REPO = 'blog'   // 与 GitCode 仓库名一致
-
-base: `/${GITCODE_REPO}/`,
-```
-
-`base` 必须与 Pages 访问路径一致。仓库名为 `blog` 时，站点地址为：
-
-`https://你的用户名.gitcode.io/blog/`
-
-## 第四步：查看 CI 与 Pages
-
-1. 推送后进入项目 **构建 → 流水线**，确认 `pages` 任务成功
-2. 进入 **部署 → Pages** 查看访问地址
-3. 首次部署可能需要等待 1～5 分钟
-
-## 第五步：本地验证（可选）
+## 本地预览 / 构建
 
 ```bash
 cd vitepress && npm run docs:dev
+cd vitepress && npm run docs:build
 ```
 
-## 手动推送静态文件（备选）
-
-若不想使用 CI，可将构建产物推到单独的 Pages 仓库：
+## 手动推送静态文件（组织 Pages 仓库）
 
 ```bash
-export GITCODE_USER=你的用户名
+export GITCODE_ORG=你的组织名   # 有组织时必填
+export GITCODE_USER=xiaobawang001
 ./scripts/deploy-gitcode.sh --push
 ```
 
-需在 GitCode 为该仓库开启 Pages，并确保 `config.ts` 中 `base` 与仓库名一致。
-
----
-
 ## 在 GitCode 新建文章
 
-1. 在仓库 `vitepress/docs/` 下新建或编辑 `.md` 文件
-2. 写好 frontmatter（`title`、`order`）
-3. 提交并 `git push`
-4. 等待流水线完成后刷新 Pages 站点
+1. 在 `vitepress/docs/` 新建或编辑 `.md`
+2. frontmatter 写 `title`、`order`
+3. `git push`
+4. 等流水线完成后刷新 Pages
 
-详细写作约定见 `vitepress/docs/guide/publish.md`。
-
-## 使用个人访问令牌（HTTPS）
-
-GitCode 不支持密码推送，HTTPS 需使用个人访问令牌：
-
-```
-https://gitcode.com/你的用户名/blog.git
-```
-
-在 **个人设置 → 私人令牌** 中创建，推送时以令牌作为密码。
+详细约定见 `vitepress/docs/guide/publish.md`。
 
 ## 常见问题
 
-**流水线未运行？**
+**个人账号看不到 Pages？**  
+正常，请用 **方案 A 创建组织** 或 **方案 B 换 Cloudflare**。
 
-- 确认根目录存在 `.gitlab-ci.yml`
-- 确认推送到了 `master` 或 `main` 分支
+**流水线成功但 Pages 空白？**  
+检查 `config.ts` 的 `base` 是否为 `/blog/`（与仓库名一致）。
 
-**页面样式错乱 / 404？**
-
-- 检查 `config.ts` 的 `base` 是否为 `/<仓库名>/`（首尾斜杠格式：`/blog/`）
-- 本地用 `npm run docs:build && npm run docs:preview` 验证
-
-**Pages 入口找不到？**
-
-- GitCode 基于 GitLab，一般在项目左侧 **部署 → Pages**
-- 部分账号的 Pages 功能仍在完善中，可改用 `./scripts/deploy-gitcode.sh --push` 推静态文件
+**转移项目后 push 失败？**  
+更新 remote：`git remote set-url gitcode git@gitcode.com:组织名/blog.git`

@@ -4,6 +4,7 @@ set -euo pipefail
 
 GITCODE_HOST="${GITCODE_HOST:-gitcode.com}"
 GITCODE_USER="${GITCODE_USER:-xiaobawang001}"
+GITCODE_ORG="${GITCODE_ORG:-}"   # Pages 仅组织可用时填组织名
 GITCODE_BRANCH="${GITCODE_BRANCH:-master}"
 # Pages 仓库名，需与 config.ts 中 base 路径一致（默认 /blog/）
 PAGES_REPO="${GITCODE_PAGES_REPO:-blog}"
@@ -28,13 +29,21 @@ echo ""
 
 if [[ "${1:-}" != "--push" ]]; then
   echo "若需手动推送静态文件到 Pages 仓库，请执行："
-  echo "  export GITCODE_USER=你的用户名"
+  echo "  export GITCODE_ORG=你的组织名   # Pages 需组织，见 GITCODE_DEPLOY.md"
   echo "  ./scripts/deploy-gitcode.sh --push"
   exit 0
 fi
 
-echo ">>> 部署到 git@${GITCODE_HOST}:${GITCODE_USER}/${PAGES_REPO}.git"
-remote="git@${GITCODE_HOST}:${GITCODE_USER}/${PAGES_REPO}.git"
+# Pages 在组织下时用 组织名/仓库名
+if [[ -n "$GITCODE_ORG" ]]; then
+  remote="git@${GITCODE_HOST}:${GITCODE_ORG}/${PAGES_REPO}.git"
+  pages_url="https://${GITCODE_ORG}.gitcode.io/${PAGES_REPO}"
+else
+  remote="git@${GITCODE_HOST}:${GITCODE_USER}/${PAGES_REPO}.git"
+  pages_url="https://${GITCODE_USER}.gitcode.io/${PAGES_REPO}"
+fi
+
+echo ">>> 部署到 $remote"
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
 
@@ -47,7 +56,7 @@ git commit -q -m "deploy: vitepress $(date '+%Y-%m-%d %H:%M:%S')"
 
 if git ls-remote --exit-code "$remote" &>/dev/null; then
   git push -f "$remote" "$GITCODE_BRANCH"
-  echo ">>> 推送完成: https://${GITCODE_USER}.gitcode.io/${PAGES_REPO}"
+  echo ">>> 推送完成: ${pages_url}"
   echo "    请在 GitCode 项目「部署 → Pages」查看访问地址"
 else
   echo "错误: 远程仓库 $remote 不存在或无法访问"

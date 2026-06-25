@@ -1,6 +1,9 @@
 # 个人 Markdown 笔记站（VitePress）
 
-语雀风格个人知识库，基于 VitePress 构建，部署到 GitCode Pages。
+语雀风格个人知识库，基于 VitePress 构建。
+
+- **GitHub Pages**（推荐）：https://xiaobawang001.github.io/blog/
+- **GitCode**：见 [GITCODE_DEPLOY.md](GITCODE_DEPLOY.md)（Pages 需组织）
 
 ## 目录结构
 
@@ -28,29 +31,19 @@ npm run docs:dev
 cd vitepress && npm run docs:build
 ```
 
-## 部署到 GitCode Pages
+## 部署
 
-**推荐**：推送代码到 GitCode，`.gitlab-ci.yml` 自动构建并发布。
-
-```bash
-git remote add gitcode git@gitcode.com:你的用户名/blog.git
-git push -u gitcode master
-```
-
-本地仅构建验证：
+### GitHub Pages（推荐，个人免费）
 
 ```bash
-./scripts/deploy-gitcode.sh
+git push github master:main
 ```
 
-手动推送静态文件（备选）：
+在仓库 **Settings → Pages → Source** 选 **GitHub Actions**。详见 [GITHUB_DEPLOY.md](GITHUB_DEPLOY.md)。
 
-```bash
-export GITCODE_USER=你的用户名
-./scripts/deploy-gitcode.sh --push
-```
+### GitCode
 
-详细步骤见 [GITCODE_DEPLOY.md](GITCODE_DEPLOY.md)。
+见 [GITCODE_DEPLOY.md](GITCODE_DEPLOY.md)。
 
 ## 写作
 

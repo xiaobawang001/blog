@@ -30,7 +30,9 @@ order: 10
 
 ### 2. 自动构建
 
-推送后，GitCode CI 流水线（`.gitlab-ci.yml`）会自动：
+> GitCode Pages **仅组织项目可用**。个人账号需先在 GitCode 创建组织，并把 `blog` 仓库转移到组织下。详见仓库根目录 `GITCODE_DEPLOY.md`。
+
+推送后，组织项目里的 CI 流水线（`.gitlab-ci.yml`）会自动：
 
 1. 安装依赖并执行 `npm run docs:build`
 2. 将构建产物部署到 GitCode Pages
@@ -41,18 +43,13 @@ order: 10
 ./scripts/deploy-gitcode.sh
 ```
 
-手动推送静态文件（备选）：
-
-```bash
-export GITCODE_USER=你的用户名
-./scripts/deploy-gitcode.sh --push
-```
-
 ### 3. 访问站点
 
-https://\<你的用户名\>.gitcode.io/\<仓库名\>/
+```
+https://<组织名>.gitcode.io/blog/
+```
 
-默认仓库名为 `blog`，即 `https://你的用户名.gitcode.io/blog/`
+例如组织名为 `bobo-notes`：`https://bobo-notes.gitcode.io/blog/`
 
 ---
 
@@ -116,6 +113,12 @@ date: 2025-06-24
 4. 推送后侧栏自动出现新分类
 
 ## 常见问题
+
+**Q：个人账号无法部署 Pages？**
+
+- GitCode 限制 Pages 仅 **组织** 可用
+- 解决：GitCode 顶部 **「+」→ 新建组织**，再把 `blog` 项目 **转移** 到组织下
+- 详见 `GITCODE_DEPLOY.md`
 
 **Q：推送后页面没更新？**
 
