@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读
-      link: /dev/setup
+      link: /guide/
     - theme: alt
       text: 发布指南
       link: /guide/publish
