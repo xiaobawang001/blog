@@ -9,6 +9,7 @@ const vitePressConfig = defineConfig({
   description: '个人 Markdown 笔记站点 — 语雀风格阅读体验',
   lang: 'zh-CN',
   base: `/${SITE_REPO}/`,
+  lastUpdated: true,
   head: [
     ['meta', { name: 'theme-color', content: '#00b96b' }],
   ],
@@ -22,6 +23,36 @@ const vitePressConfig = defineConfig({
       { text: '发布指南', link: '/guide/publish' },
       { text: 'GitHub', link: `https://github.com/${GITHUB_USER}/${SITE_REPO}` },
     ],
+    search: {
+      provider: 'local',
+      options: {
+        locales: {
+          root: {
+            translations: {
+              button: {
+                buttonText: '搜索',
+                buttonAriaLabel: '搜索文档',
+              },
+              modal: {
+                displayDetails: '显示详细列表',
+                resetButtonTitle: '清除搜索条件',
+                backButtonTitle: '返回',
+                noResultsText: '无搜索结果',
+                footer: {
+                  selectKey: '选择',
+                  navigateKey: '切换',
+                  closeKey: '关闭',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    editLink: {
+      pattern: `https://github.com/${GITHUB_USER}/${SITE_REPO}/edit/master/vitepress/docs/:path`,
+      text: '在 GitHub 上编辑',
+    },
     outline: {
       label: '文章目录',
       level: [2, 3, 4],

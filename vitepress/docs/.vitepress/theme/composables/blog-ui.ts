@@ -2,6 +2,7 @@ import { onMounted, ref } from 'vue'
 
 export const foldersExpanded = ref(true)
 export const allFoldersForcedCollapsed = ref(false)
+export const outlineExpanded = ref(true)
 
 function triggerSidebarItemToggle(el: HTMLElement) {
   const caret = el.querySelector<HTMLElement>('.caret')
@@ -33,6 +34,10 @@ export function applyUiClasses() {
   document.documentElement.classList.toggle(
     'blog-folders-all-collapsed',
     allFoldersForcedCollapsed.value,
+  )
+  document.documentElement.classList.toggle(
+    'blog-outline-collapsed',
+    !outlineExpanded.value,
   )
 }
 
@@ -78,10 +83,17 @@ export function useBlogUi() {
     applyUiClasses()
   }
 
+  function toggleOutline() {
+    outlineExpanded.value = !outlineExpanded.value
+    applyUiClasses()
+  }
+
   return {
     foldersExpanded,
+    outlineExpanded,
     scrollToActiveDoc,
     toggleAllFolders,
+    toggleOutline,
     applyUiClasses,
   }
 }

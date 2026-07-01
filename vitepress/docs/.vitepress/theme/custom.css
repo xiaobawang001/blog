@@ -1014,3 +1014,59 @@ html.blog-folders-all-collapsed #VPSidebarNav .VPSidebarItem.collapsible .caret-
 .OutlineToolbar .tb-label {
   color: var(--yuque-text) !important;
 }
+
+/* ========== 大纲折叠 ========== */
+html.blog-outline-collapsed .VPDocAsideOutline .content {
+  display: none !important;
+}
+
+html.blog-outline-collapsed .OutlineToolbar {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+}
+
+/* ========== 顶栏搜索 ========== */
+.VPNavBarSearch .DocSearch-Button {
+  border-radius: 6px !important;
+  border: 1px solid var(--yuque-border-light) !important;
+  background: var(--yuque-paper-bg) !important;
+  color: var(--yuque-text-secondary) !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.VPNavBarSearch .DocSearch-Button:hover {
+  border-color: var(--yuque-brand) !important;
+  box-shadow: 0 0 0 2px var(--yuque-brand-soft) !important;
+}
+
+.VPNavBarSearch .DocSearch-Button-Keys,
+.VPNavBarSearch .DocSearch-Button-Placeholder {
+  color: var(--yuque-text-secondary) !important;
+}
+
+/* ========== 页脚编辑链接 ========== */
+.VPDocFooter .edit-info {
+  border-top: 1px solid var(--yuque-border-light) !important;
+  padding-top: 16px !important;
+}
+
+.VPDocFooter .edit-link-button {
+  color: var(--yuque-text-secondary) !important;
+  font-size: 14px !important;
+  transition: color 0.2s;
+}
+
+.VPDocFooter .edit-link-button:hover {
+  color: var(--yuque-brand) !important;
+}
+
+.VPDocFooter .last-updated {
+  color: var(--yuque-text-secondary) !important;
+  font-size: 13px !important;
+}
+
+/* ========== 阅读进度条（壁纸模式） ========== */
+html.blog-wallpaper-active .ReadingProgress .bar {
+  opacity: 0.9;
+}

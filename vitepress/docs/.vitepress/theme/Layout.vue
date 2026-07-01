@@ -9,6 +9,8 @@ import NavOpacityControl from './components/NavOpacityControl.vue'
 import PageBackground from './components/PageBackground.vue'
 import SidebarToolbar from './components/SidebarToolbar.vue'
 import OutlineToolbar from './components/OutlineToolbar.vue'
+import ReadingProgress from './components/ReadingProgress.vue'
+import BackToTop from './components/BackToTop.vue'
 import { applyBackgroundClasses } from './composables/use-background'
 import { clearForcedFolderCollapse } from './composables/blog-ui'
 import { setupOutlineNavigation } from './composables/outline-nav'
@@ -58,6 +60,8 @@ onUnmounted(() => {
 
 <template>
   <PageBackground />
+  <ReadingProgress />
+  <BackToTop />
   <DefaultLayout>
     <template #nav-bar-title-before>
       <img class="site-avatar" :src="siteAvatar" alt="" width="40" height="40" />

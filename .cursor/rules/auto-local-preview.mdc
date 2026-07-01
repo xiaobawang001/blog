@@ -1,0 +1,24 @@
+---
+description: 修改博客站点后自动启动 VitePress 本地预览
+alwaysApply: true
+---
+
+# 本地预览
+
+完成对本仓库（`vitepress/` 站点、主题、配置、文档等）的代码调整后，**自动启动或重启本地预览**，无需等用户再开口。
+
+## 命令
+
+```bash
+cd vitepress && npm run docs:dev
+```
+
+## 执行方式
+
+- 在后台运行；若已有 `vitepress dev` 进程在跑，不必重复启动
+- 启动后告知用户访问地址：`http://localhost:5173/blog/`
+- 构建类改动（仅 `docs:build` 验证）后，同样启动 dev 便于肉眼确认
+
+## 例外
+
+- 纯问答、只读排查、用户明确说不要启动预览时，不启动
