@@ -1,0 +1,98 @@
+name: Deploy CMS OAuth Worker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'cms/oauth-worker/**'
+      - '.github/workflows/deploy-cms-oauth.yml'
+
+concurrency:
+  group: cms-oauth-worker
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cms/oauth-worker/package-lock.json
+
+      - name: Install dependencies
+        working-directory: cms/oauth-worker
+        run: npm ci
+
+      - name: Deploy Worker
+        id: deploy
+        working-directory: cms/oauth-worker
+        run: |
+          set -euo pipefail
+          npx wrangler deploy 2>&1 | tee /tmp/wrangler-deploy.log
+          URL=$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' /tmp/wrangler-deploy.log | head -1 || true)
+          if [ -z "$URL" ]; then
+            URL="https://blog-cms-oauth.${CLOUDFLARE_ACCOUNT_ID}.workers.dev"
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "Deployed: $URL"
+
+      - name: Configure Worker secrets
+        if: ${{ secrets.GITHUB_OAUTH_CLIENT_ID != '' && secrets.GITHUB_OAUTH_CLIENT_SECRET != '' }}
+        working-directory: cms/oauth-worker
+        run: |
+          printf '%s' "$GITHUB_CLIENT_ID" | npx wrangler secret put GITHUB_CLIENT_ID
+          printf '%s' "$GITHUB_CLIENT_SECRET" | npx wrangler secret put GITHUB_CLIENT_SECRET
+        env:
+          GITHUB_CLIENT_ID: ${{ secrets.GITHUB_OAUTH_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.GITHUB_OAUTH_CLIENT_SECRET }}
+
+      - name: Update Decap CMS config
+        if: steps.deploy.outputs.url != ''
+        run: |
+          URL="${{ steps.deploy.outputs.url }}"
+          CONFIG="vitepress/docs/public/admin/config.yml"
+          if grep -q "^  base_url:" "$CONFIG"; then
+            sed -i "s|^  base_url:.*|  base_url: $URL|" "$CONFIG"
+          else
+            sed -i "s|# base_url:.*|  base_url: $URL|" "$CONFIG"
+          fi
+          if grep -q "^  auth_endpoint:" "$CONFIG"; then
+            sed -i "s|^  auth_endpoint:.*|  auth_endpoint: auth|" "$CONFIG"
+          else
+            sed -i 's|# auth_endpoint:.*|  auth_endpoint: auth|' "$CONFIG"
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$CONFIG"
+          if git diff --staged --quiet; then
+            echo "config.yml already up to date"
+          else
+            git commit -m "chore(cms): update OAuth base_url from worker deploy"
+            git push
+          fi
+
+      - name: Summary
+        run: |
+          URL="${{ steps.deploy.outputs.url }}"
+          echo "## CMS OAuth Worker" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Worker URL: \`$URL\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- OAuth 回调地址（GitHub App）: \`$URL/callback\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- CMS 后台: https://xiaobawang001.github.io/blog/admin/" >> "$GITHUB_STEP_SUMMARY"
+          if [ -z "${{ secrets.GITHUB_OAUTH_CLIENT_ID }}" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "> 下一步：用上述回调地址创建 GitHub OAuth App，将 Client ID/Secret 写入仓库 Secrets 后重新运行本 workflow。" >> "$GITHUB_STEP_SUMMARY"
+          fi

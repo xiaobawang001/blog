@@ -5,7 +5,10 @@ node_modules/
 # Build outputs
 vitepress/docs/.vitepress/dist/
 vitepress/docs/.vitepress/cache/
-public/
+
+# VitePress public：保留 CMS 后台，忽略用户上传的图片
+vitepress/docs/public/uploads/*
+!vitepress/docs/public/uploads/.gitkeep
 
 # OS
 .DS_Store
