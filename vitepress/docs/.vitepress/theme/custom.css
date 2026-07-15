@@ -960,6 +960,84 @@ html:not(.dark) .vp-doc .vp-code span {
   color: var(--yuque-text-secondary) !important;
 }
 
+/* ========== 首页精选文章 ========== */
+.home-articles {
+  padding: 0 24px 64px;
+}
+
+.home-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--yuque-text);
+  margin: 0 auto 20px;
+  max-width: 720px;
+  text-align: left;
+}
+
+.home-article-grid {
+  max-width: 720px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .home-article-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .home-article-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.home-article-card {
+  display: block;
+  background: var(--yuque-paper-bg);
+  border: 1px solid var(--yuque-border-light);
+  border-radius: 8px;
+  padding: 20px;
+  text-decoration: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.home-article-card:hover {
+  border-color: var(--yuque-border);
+  text-decoration: none;
+}
+
+.home-article-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--yuque-text);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.home-article-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--yuque-text-secondary);
+  margin: 0 0 12px;
+}
+
+.home-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--yuque-text-secondary);
+  background: var(--yuque-border-light);
+  border-radius: 999px;
+  line-height: 1.5;
+}
+
 /* ========== 右侧目录 ========== */
 .VPDocAsideOutline.has-outline {
   display: block !important;
