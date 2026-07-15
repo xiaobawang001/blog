@@ -583,25 +583,6 @@ body {
     order: 1;
   }
 
-  .nav-link-item {
-    display: inline-flex;
-    align-items: center;
-    padding: 0 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--yuque-text-secondary);
-    text-decoration: none;
-    transition: color 0.15s, background-color 0.15s;
-    white-space: nowrap;
-    height: 32px;
-  }
-
-  .nav-link-item:hover {
-    background: var(--yuque-brand-soft);
-    color: var(--yuque-brand);
-  }
-
   .VPNavBar.has-sidebar .content-body {
     display: flex !important;
     align-items: center;

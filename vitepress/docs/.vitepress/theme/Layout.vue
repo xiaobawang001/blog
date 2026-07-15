@@ -93,9 +93,9 @@ onUnmounted(() => {
     </template>
     <template #nav-bar-content-before>
       <div class="nav-links">
-        <a class="nav-link-item" href="/blog/">首页</a>
-        <a class="nav-link-item" href="/blog/guide/publish.html">发布指南</a>
-        <a class="nav-link-item" href="https://github.com/xiaobawang001/blog" target="_blank" rel="noopener">GitHub</a>
+        <el-button text size="small" class="nav-link-item" tag="a" href="/blog/">首页</el-button>
+        <el-button text size="small" class="nav-link-item" tag="a" href="/blog/guide/publish.html">发布指南</el-button>
+        <el-button text size="small" class="nav-link-item" tag="a" href="https://github.com/xiaobawang001/blog" target="_blank" rel="noopener">GitHub</el-button>
       </div>
     </template>
     <template #nav-bar-content-after>
