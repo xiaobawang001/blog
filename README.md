@@ -2,14 +2,15 @@
 
 语雀风格个人知识库，基于 VitePress 构建，部署到 GitHub Pages。
 
-**在线地址**：https://xiaobawang001.github.io/blog/
+**在线地址**：https://xiaobawang001.github.io/
 
 ## 目录结构
 
 ```
 blog/
-├── vitepress/              # VitePress 站点（Markdown 在 docs/ 下）
+├── docs/                   # Markdown 文章（VitePress 内容目录）
 ├── .github/workflows/      # GitHub Actions 自动部署
+├── sidebar-tree.yaml       # 侧边栏层级配置
 ├── GITHUB_DEPLOY.md        # 部署说明
 └── README.md
 ```
@@ -17,7 +18,7 @@ blog/
 ## 本地预览
 
 ```bash
-cd vitepress && npm install
+npm install
 npm run docs:dev
 ```
 
@@ -31,4 +32,4 @@ git push github master
 
 ## 写作
 
-在 `vitepress/docs/` 下按文件夹组织 Markdown，写好 frontmatter 后侧栏自动生成。详见 `vitepress/docs/guide/publish.md`。
+在 `docs/` 下按文件夹组织 Markdown，文件名即标题，编辑根目录 `sidebar-tree.yaml` 控制侧边栏排序。

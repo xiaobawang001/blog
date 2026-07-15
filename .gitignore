@@ -3,12 +3,12 @@ node_modules/
 .pnpm-store/
 
 # Build outputs
-vitepress/docs/.vitepress/dist/
-vitepress/docs/.vitepress/cache/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
 
-# VitePress public：保留 CMS 后台，忽略用户上传的图片
-vitepress/docs/public/uploads/*
-!vitepress/docs/public/uploads/.gitkeep
+# VitePress public
+docs/public/uploads/*
+!docs/public/uploads/.gitkeep
 
 # OS
 .DS_Store

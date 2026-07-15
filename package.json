@@ -1,0 +1,23 @@
+{
+  "name": "blog-vitepress",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3",
+    "vitepress-sidebar": "^1.36.1",
+    "yaml": "^2.9.0"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.24.0",
+    "@viz-js/viz": "^3.28.0",
+    "element-plus": "^2.14.3",
+    "gray-matter": "^4.0.3",
+    "mermaid": "^11.16.0",
+    "plantuml-encoder": "^1.4.0"
+  }
+}

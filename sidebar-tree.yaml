@@ -1,0 +1,16 @@
+# 侧边栏层级配置
+# 数组 = 文章列表，对象 = 子目录
+
+使用指南:
+  - 站点功能
+  - GitHub-Pages部署指南
+
+服务器运维:
+  docker:
+    - Docker安装
+    - Docker镜像源配置
+    - Docker指令速查手册
+    - 1Panel安装
+  psql:
+    - psql安装
+    - 安装pgvector扩展
