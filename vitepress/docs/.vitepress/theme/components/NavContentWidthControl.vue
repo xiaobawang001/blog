@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useContentWidth } from '../composables/use-content-width'
-import { MoveHorizontal } from 'lucide-vue-next'
+import { MoveHorizontal } from '@lucide/vue'
 
 const { contentWidthIndex, cycleContentWidth } = useContentWidth()
 

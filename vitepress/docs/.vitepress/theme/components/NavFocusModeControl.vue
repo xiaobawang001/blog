@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useData } from 'vitepress'
 import { useFocusMode } from '../composables/use-focus-mode'
-import { Eye } from 'lucide-vue-next'
+import { Eye } from '@lucide/vue'
 
 const { frontmatter, page } = useData()
 const { focusMode, toggleFocusMode } = useFocusMode()

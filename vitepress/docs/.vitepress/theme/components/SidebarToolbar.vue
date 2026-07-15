@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useBlogUi } from '../composables/blog-ui'
-import { FileText, LocateFixed, ChevronUp, ChevronDown } from 'lucide-vue-next'
+import { FileText, LocateFixed, ChevronUp, ChevronDown } from '@lucide/vue'
 
 const { foldersExpanded, scrollToActiveDoc, toggleAllFolders } = useBlogUi()
 </script>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useData } from 'vitepress'
-import { ArrowUp } from 'lucide-vue-next'
+import { ArrowUp } from '@lucide/vue'
 
 const { frontmatter, page } = useData()
 const show = ref(false)

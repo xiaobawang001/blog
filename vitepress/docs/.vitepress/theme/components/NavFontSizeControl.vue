@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useFontSize } from '../composables/use-font-size'
-import { Type } from 'lucide-vue-next'
+import { Type } from '@lucide/vue'
 
 const { fontSizeIndex, cycleFontSize } = useFontSize()
 

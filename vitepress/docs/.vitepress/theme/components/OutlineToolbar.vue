@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useBlogUi } from '../composables/blog-ui'
-import { ChevronUp, ChevronDown } from 'lucide-vue-next'
+import { ChevronUp, ChevronDown } from '@lucide/vue'
 
 const { outlineExpanded, toggleOutline } = useBlogUi()
 </script>

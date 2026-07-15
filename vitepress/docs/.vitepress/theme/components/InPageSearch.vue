@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useData, useRoute } from 'vitepress'
-import { Search, ArrowUp, ArrowDown, X } from 'lucide-vue-next'
+import { Search, ArrowUp, ArrowDown, X } from '@lucide/vue'
 import {
   clearInPageSearch,
   getCurrentMatchIndex,
