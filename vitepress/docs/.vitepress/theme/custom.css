@@ -1136,7 +1136,7 @@ html.blog-folders-all-collapsed #VPSidebarNav .VPSidebarItem.collapsible .caret-
 /* ========== 顶栏搜索 ========== */
 .VPNavBarSearch .DocSearch-Button {
   border-radius: 6px !important;
-  border: 1px solid var(--yuque-border-light) !important;
+  border: 1px solid var(--yuque-border) !important;
   background: var(--yuque-paper-bg) !important;
   color: var(--yuque-text-secondary) !important;
   transition: border-color 0.2s, box-shadow 0.2s;
