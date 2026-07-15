@@ -1127,11 +1127,9 @@ html.blog-folders-all-collapsed #VPSidebarNav .VPSidebarItem.collapsible .caret-
   color: var(--yuque-text) !important;
 }
 
-/* ========== 大纲折叠 ========== */
-html.blog-outline-collapsed .VPDocAsideOutline .content {
-  max-height: 7em;
-  overflow-y: hidden;
-  /* 折叠后仍保留少量可见内容 */
+/* ========== 大纲折叠：保留一级标题，隐藏子级 ========== */
+html.blog-outline-collapsed .VPDocAsideOutline .content .VPDocOutlineItem.nested {
+  display: none !important;
 }
 
 html.blog-outline-collapsed .OutlineToolbar {
