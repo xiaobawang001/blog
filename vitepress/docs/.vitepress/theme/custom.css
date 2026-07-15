@@ -1129,7 +1129,9 @@ html.blog-folders-all-collapsed #VPSidebarNav .VPSidebarItem.collapsible .caret-
 
 /* ========== 大纲折叠 ========== */
 html.blog-outline-collapsed .VPDocAsideOutline .content {
-  display: none !important;
+  max-height: 7em;
+  overflow-y: hidden;
+  /* 折叠后仍保留少量可见内容 */
 }
 
 html.blog-outline-collapsed .OutlineToolbar {
