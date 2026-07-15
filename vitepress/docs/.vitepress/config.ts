@@ -42,7 +42,6 @@ const vitePressConfig = defineConfig({
     darkModeSwitchLabel: '外观模式',
     nav: [
       { text: '首页', link: '/' },
-      { text: '站点导航', link: '/sitemap' },
       { text: '发布指南', link: '/guide/publish' },
       { text: 'GitHub', link: `https://github.com/${GITHUB_USER}/${SITE_REPO}` },
     ],
@@ -122,5 +121,5 @@ export default withSidebar(vitePressConfig, {
   sortMenusByFrontmatterOrder: true,
   hyphenToSpace: true,
   includeRootIndexFile: false,
-  excludeByGlobPattern: ['guide/publish.md', 'sitemap.md'],
+  excludeByGlobPattern: ['guide/publish.md'],
 })
