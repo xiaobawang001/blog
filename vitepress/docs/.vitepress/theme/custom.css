@@ -41,6 +41,93 @@
   --vp-sidebar-icon-file: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3C/svg%3E");
 }
 
+/* ========== Element Plus 主题适配 ========== */
+:root {
+  --el-color-primary: #00b96b;
+  --el-color-primary-light-3: rgba(0, 185, 107, 0.12);
+  --el-color-primary-light-5: rgba(0, 185, 107, 0.24);
+  --el-border-radius-base: 6px;
+  --el-border-radius-small: 4px;
+  --el-bg-color: var(--yuque-paper-bg);
+  --el-bg-color-overlay: var(--yuque-paper-bg);
+  --el-text-color-primary: var(--yuque-text);
+  --el-text-color-regular: var(--yuque-text);
+  --el-text-color-secondary: var(--yuque-text-secondary);
+  --el-border-color: var(--yuque-border);
+  --el-border-color-light: var(--yuque-border-light);
+  --el-fill-color-blank: var(--yuque-paper-bg);
+  --el-fill-color-light: var(--yuque-border-light);
+  --el-font-family: var(--yuque-font);
+  --el-color-white: var(--yuque-paper-bg);
+  --el-color-black: var(--yuque-text);
+}
+
+/* el-tag 语雀风格 */
+.el-tag {
+  border-radius: 999px;
+  background: var(--yuque-border-light);
+  border-color: transparent;
+  color: var(--yuque-text-secondary);
+  font-size: 12px;
+  padding: 4px 10px;
+  line-height: 1.4;
+}
+.el-tag:hover {
+  background: var(--yuque-brand-soft);
+  color: var(--yuque-brand);
+}
+
+/* el-button text 变体匹配项目风格 */
+.el-button.is-text {
+  color: var(--vp-c-text-2);
+  border-radius: 6px;
+}
+.el-button.is-text:hover,
+.el-button.is-text:focus {
+  background: var(--yuque-brand-soft);
+  color: var(--yuque-brand);
+}
+.el-button.is-text:active { background: var(--yuque-brand-soft); }
+
+/* el-backtop 语雀风格 */
+.el-backtop {
+  border: 1px solid var(--yuque-border-light);
+  border-radius: 8px;
+  background: var(--yuque-paper-bg);
+  color: var(--yuque-text-secondary);
+  box-shadow: var(--yuque-shadow-paper);
+}
+.el-backtop:hover {
+  background: var(--yuque-brand-soft);
+  border-color: var(--yuque-brand);
+  color: var(--yuque-brand);
+}
+
+/* el-input small */
+.el-input__wrapper {
+  border-radius: 6px;
+  box-shadow: none;
+  border: 1px solid var(--yuque-border);
+  background: var(--yuque-page-bg);
+}
+.el-input__wrapper:hover { border-color: var(--yuque-text-secondary); }
+.el-input.is-focus .el-input__wrapper,
+.el-input__wrapper.is-focus {
+  border-color: var(--yuque-brand);
+  box-shadow: 0 0 0 2px var(--yuque-brand-soft);
+}
+
+/* el-tooltip */
+.el-tooltip__trigger { outline: none; }
+
+/* el-button --primary */
+.el-button--primary {
+  --el-button-bg-color: var(--yuque-brand);
+  --el-button-border-color: var(--yuque-brand);
+  --el-button-hover-bg-color: #009456;
+  --el-button-hover-border-color: #009456;
+}
+
 .dark {
   --yuque-page-bg: #2a2b30;
   --yuque-paper-bg: #2e2f35;
