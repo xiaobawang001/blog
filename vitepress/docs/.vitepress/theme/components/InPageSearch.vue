@@ -29,8 +29,8 @@ onUnmounted(() => { document.removeEventListener('keydown', onKeydown, true); cl
 
 <template>
   <div v-if="visible" class="InPageSearch">
-    <el-tooltip content="文内搜索 (Ctrl+Shift+F)" :show-after="400">
-      <el-button class="isp-trigger" :class="{ active: open }" @click="open ? closePanel() : openPanel()">
+    <el-tooltip v-show="!open" content="文内搜索 (Ctrl+Shift+F)" :show-after="400">
+      <el-button class="isp-trigger" :class="{ active: open }" @click="openPanel()">
         <Search :size="18" />
       </el-button>
     </el-tooltip>
