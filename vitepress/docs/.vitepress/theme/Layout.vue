@@ -91,13 +91,6 @@ onUnmounted(() => {
     <template #nav-bar-title-before>
       <img class="site-avatar" :src="siteAvatar" alt="" width="40" height="40" />
     </template>
-    <template #nav-bar-content-before>
-      <div class="nav-links">
-        <el-button text size="small" class="nav-link-item" tag="a" href="/blog/">首页</el-button>
-        <el-button text size="small" class="nav-link-item" tag="a" href="/blog/guide/publish.html">发布指南</el-button>
-        <el-button text size="small" class="nav-link-item" tag="a" href="https://github.com/xiaobawang001/blog" target="_blank" rel="noopener">GitHub</el-button>
-      </div>
-    </template>
     <template #nav-bar-content-after>
       <NavFontSizeControl />
       <NavContentWidthControl />
