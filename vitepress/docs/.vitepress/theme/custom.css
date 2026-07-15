@@ -195,8 +195,7 @@ body {
     overflow: hidden;
   }
 
-  /* 首页等无面包屑页面：控件靠右，与左侧博主信息拉开距离 */
-  .VPNavBar .content-body:not(:has(.NavBreadcrumb)) {
+  .VPNavBar .content-body {
     justify-content: flex-end !important;
   }
 
@@ -204,18 +203,8 @@ body {
     padding-left: 16px !important;
   }
 
-  .VPNavBar .content-body .NavBreadcrumb {
-    order: 1;
-    flex: 1 1 auto;
-    min-width: 0;
-    max-width: 100%;
-    align-self: center;
-    line-height: 20px;
-    overflow: hidden;
-  }
-
   .VPNavBar .content-body .search {
-    order: 2;
+    order: 1;
     flex: 0 0 auto !important;
     min-width: 0;
     max-width: 168px;
@@ -250,39 +239,39 @@ body {
   }
 
   .VPNavBar .content-body .menu {
-    order: 3;
+    order: 2;
   }
 
   .VPNavBar .content-body .translations {
-    order: 4;
+    order: 3;
   }
 
   .VPNavBar .content-body .appearance {
-    order: 5;
+    order: 4;
   }
 
   .VPNavBar .content-body .NavFontSizeControl {
-    order: 6;
+    order: 5;
   }
 
   .VPNavBar .content-body .NavContentWidthControl {
-    order: 7;
+    order: 6;
   }
 
   .VPNavBar .content-body .NavFocusModeControl {
-    order: 8;
+    order: 7;
   }
 
   .VPNavBar .content-body .social-links {
-    order: 11;
+    order: 8;
   }
 
   .VPNavBar .content-body .extra {
-    order: 12;
+    order: 9;
   }
 
   .VPNavBar .content-body .hamburger {
-    order: 11;
+    order: 10;
   }
 }
 
