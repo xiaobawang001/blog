@@ -199,6 +199,15 @@ body {
     justify-content: flex-end !important;
   }
 
+  .VPNavBarMenu { display: none !important; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    order: 1;
+  }
+
   .VPNavBar.home .content {
     padding-left: 16px !important;
   }
@@ -572,15 +581,6 @@ body {
 
   .VPNavBar.home.has-sidebar .content {
     padding-left: calc(var(--vp-sidebar-width) + 16px) !important;
-  }
-
-  .VPNavBarMenu { display: none !important; }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    order: 1;
   }
 
   .VPNavBar.has-sidebar .content-body {
